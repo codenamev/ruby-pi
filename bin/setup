@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+echo "Updating your system dependencies"
+echo ">>> sudo apt-get update && sudo apt-get upgrade"
+sudo apt-get update && sudo apt-get upgrade
+echo "Installing latest 'ruby-dev' dependency..."
+echo ">>> sudo apt-get install ruby-dev"
+sudo apt-get install ruby-dev
+
+echo "Installing the 'rake' gem..."
+echo ">>> gem install rake"
+sudo gem install rake --no-rdoc --no-ri
+
+echo "Updating system gems"
+echo ">>> sudo gem update --system"
+sudo gem update --system --no-rdoc --no-ri
+
+echo "Installing the 'bundler' gem..."
+echo ">>> gem install bundler"
+sudo gem install bundler --no-rdoc --no-ri
+
+echo "Downloading forked gems to get all examples working..."
+if [[ -d ./vendor/repos/rpi_gpio ]]; then
+  echo "Skipping (already cloned)..."
+else
+  echo ">>> mkdir -p ./vendor/repos"
+  echo ">>> git clone https://github.com/codenamev/rpi_gpio.git ./vendor/repos/rpi_gpio"
+  mkdir -p ./vendor/repos
+  git clone https://github.com/codenamev/rpi_gpio.git ./vendor/repos/rpi_gpio
+  echo "Compiling forked repos with native extensions"
+  echo ">>> cd vendor/repos/rpi_gpio && bundle install && bundle exec rake compile"
+  cd vendor/repos/rpi_gpio && bundle install && bundle exec rake compile
+  echo ">>> cd - "
+  cd -
+fi
+
+
+echo "Installing required gem dependencies..."
+echo ">>> bundle install"
+bundle install

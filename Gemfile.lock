@@ -1,0 +1,17 @@
+PATH
+  remote: vendor/repos/rpi_gpio
+  specs:
+    rpi_gpio (0.3.3)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rpi_gpio!
+
+BUNDLED WITH
+   1.16.2
